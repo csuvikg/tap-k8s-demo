@@ -1,0 +1,23 @@
+# Ignore git folders
+.git
+.gitignore
+
+# Ignore IntelliJ files
+.idea/
+*.iml
+
+# Ignore mvn wrapper files
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignore build artifacts
+target/
+
+# Ignore docker-related files
+Dockerfile
+.dockerignore
+
+
+# Kubernetes manifests
+k8s

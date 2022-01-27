@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-test-deployment
+  labels:
+    app: k8s-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-test
+  template:
+    metadata:
+      labels:
+        app: k8s-test
+    spec:
+      containers:
+        - name: k8s-test-pod-app
+          image: csuvikg/tap-k8s-test:1.0
+          ports:
+            - name: app
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              port: app
+              path: /actuator/health/readiness
+            failureThreshold: 1
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              port: app
+              path: /actuator/health/liveness
+            failureThreshold: 1
+            initialDelaySeconds: 5
+            periodSeconds: 10

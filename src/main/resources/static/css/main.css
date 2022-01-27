@@ -1,0 +1,9 @@
+body, html, main {
+    margin: 0;
+    height: 100%;
+    display: grid;
+}
+
+.container {
+    margin: auto;
+}

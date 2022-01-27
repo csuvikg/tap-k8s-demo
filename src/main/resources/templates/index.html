@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<main role="main">
+    <div class="container">
+        <h1 style="font-family: Arial, Helvetica, sans-serif; color: #333333">
+            Hello from <span style="color: #32AF8D" th:text="${environment}"></span>!
+        </h1>
+    </div>
+</main>
+</body>
+</html>
