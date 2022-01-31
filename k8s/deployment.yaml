@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: k8s-test-pod-app
-          image: csuvikg/tap-k8s-test:1.0
+          image: csuvikg/tap-k8s-test:1.1
           ports:
             - name: app
               containerPort: 8080
@@ -34,3 +34,39 @@ spec:
             failureThreshold: 1
             initialDelaySeconds: 5
             periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-test-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: k8s-test
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/affinity: cookie
+  name: k8s-test-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: greet.tap.iflambda.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: k8s-test-service
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - greet.tap.iflambda.com
+      secretName: greet-tap-iflambda-com-tls
